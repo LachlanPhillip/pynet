@@ -3,7 +3,7 @@ import json
 from threading import *
 BUF_SIZE = 30
 
-def connect(sock, ip, port):
+def connect(sock, ip, port): #self explanatory
   try:
     sock.connect((ip, port))
     print("Connected to ", ip, "|", port)
@@ -11,7 +11,7 @@ def connect(sock, ip, port):
     print("Error connecting to ", ip ,"|" , port)
     print("OS error: {0}".format(e))
 
-def send(s,t, d):
+def send(s,t, d): #socket, type, data eg: net.send(soc, "msg", "hello world!")
   try:
     datatable = json.dumps([t, d])
     etable = datatable.encode()
@@ -23,7 +23,7 @@ def send(s,t, d):
     print("Error sending data to ", ip ,"|" , port)
     print("OS error: {0}".format(e))
 
-def receive(s):
+def receive(s): #returns a list like [type, content] eg: ["msg", "hello world!"]
   fd = s.recv(BUF_SIZE).decode() #Decode inital packet
   fdd = fd.split(";",1) #Read length
   if not int(fdd[0]):
@@ -41,7 +41,7 @@ def receive(s):
       datatable = json.loads(datatable)
     except OSError:
       print("Error decoding data :(")
-    print(datatable)
+    #print(datatable)
     return datatable
   except OSError:
     print("failed to retrieve and decode data.")
